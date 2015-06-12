@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"   
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      >
+    <body>
+	    <ui:composition>
+ 
+     <div class="container">
+
+      <!-- Main component for a primary marketing message or call to action -->            
+      <div class="mainContent" id="wrapper">
+      <div id="tabs" class="palette-container">
+      		<ul>
+      			<li><a class="paletteLabel" href="#tab-1">Palette</a></li>
+      			<li><a class="paletteLabel" href="#tab-2">Data Explorer</a></li>
+      			<li><a class="paletteLabel" href="#tab-3">Resource Explorer</a></li>
+      		</ul>
+      		
+      		<div id="tab-1">
+		    	<div id="palette" class="palette">
+	      			<p class="paletteItem">Label</p>
+      				<p class="paletteItem">Text</p>
+      				<p class="paletteItem">Dynamic Text</p>
+      				<p class="paletteItem">Data</p>
+    	  			<p class="paletteItem">Image</p>
+	      			<p class="paletteItem">Grid</p>
+      				<p class="paletteItem">List</p>
+      				<p class="paletteItem">Table</p>
+      				<p class="paletteItem">Chart</p>
+    	  			<p class="paletteItem">Cross Tab</p>
+	      			<p class="paletteItem">Aggregation</p>
+      				<p class="paletteItem">Relative Time Period</p>
+      			</div>
+      		</div>
+      		
+      		<div id="tab-2">
+      			<p class="paletteItem">Data Sources</p>
+      			<p class="paletteItem">Data Sets</p>
+      			<p class="paletteItem">Data Cubes</p>
+      			<p class="paletteItem">Report Parameters</p>
+      			<p class="paletteItem">Variables</p>
+      		</div>
+      		
+      		<div id="tab-3">
+      			<p class="paletteItem">Resource Explorer</p>
+      		</div>
+      </div>
+      		<div id="designAreaTabs" class="designArea-container">
+      			<ul>
+      				<li><a class="designAreaLabel" href="#layout">Layout</a></li>
+      				<li><a class="designAreaLabel" href="#masterPage">Master Page</a></li>
+      				<li><a class="designAreaLabel" href="#script">Script</a></li>
+      				<li><a class="designAreaLabel" id="xmlLabel" href="#xmlSource">XML Source</a></li>  				
+      			</ul>
+      			
+      			<div id="layout">
+      				<div class="designArea">
+      				</div>
+      			</div>
+      			<div id="masterPage">
+      			    <div class="masterPage">
+      				</div>
+      			</div>
+      			<div id="script">
+      			    <div class="script">
+      			    	<table>
+      			    		<tr>
+      			    			<td>
+      			    				<select id="method">
+  										<option value="volvo">initialize</option>
+  										<option value="saab">Saab</option>
+  										<option value="opel">Opel</option>
+  										<option value="audi">Audi</option>
+									</select>  
+      			    			</td>
+      			    		</tr>
+      			    	</table>
+      			    	
+      			    	<form>
+      			    		<textarea id="scriptText">
+      			    		</textarea>
+      			    	</form>
+      				</div>
+      			</div>
+      			<div id="xmlSource">
+      					<h1>XML Source</h1> <div id="xmlReportName"></div>
+      			    	<form style="position: relative;">
+      			    		<textarea class="xmlText" id="xmlText">
+      			    			<h:outputText value="#{xmlSource.xmlSource}"/>
+      			    		</textarea>
+      			    	</form>
+      			</div>
+      		</div>
+	  </div>
+    </div> <!-- /container -->
+	    </ui:composition>
+    </body>
+</html>
