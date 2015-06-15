@@ -1,60 +1,124 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"   
-      xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:b="http://bootsfaces.net/ui"
-      xmlns:p="http://primefaces.org/ui">
-    <body>
-	    <ui:composition>
-	        <!-- Fixed navbar -->
-    <nav class="navbar navbar-default navbar-fixed-top">
-      <div class="container">
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-          <a class="navbar-brand" href="#">BDWeb</a>
-        </div>
-        <div id="navbar" class="navbar-collapse collapse">
-          <ul class="nav navbar-nav">
-            <li class="dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">File<span class="caret"></span></a>
-              <ul class="dropdown-menu" role="menu">
-                <li><a href="#">New Report Design</a></li>
-                <li><a href="#">Open Report Design</a></li>
-                <li class="divider"></li>
-                <li><a href="#">Save</a></li>
-                <li><a href="#">Save As...</a></li>
-                <li class="divider"></li>
-                <li><a href="#">Exit</a></li>
-              </ul>
-            </li>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:ui="http://java.sun.com/jsf/facelets" 
+	  xmlns:h="http://java.sun.com/jsf/html" 
+	  xmlns:b="http://bootsfaces.net/ui" 
+	  xmlns:p="http://primefaces.org/ui"
+	  xmlns:f="http://java.sun.com/jsf/core">
+
+<body>
+    <ui:composition>
+<h:form>     
+
+	<p:dialog header="New Data Source" widgetVar="dialogNewDataSource" minHeight="40" styleClass="dataExplorer">	
+	</p:dialog>
+	
+	<p:dialog header="New Data Set" widgetVar="dialogNewDataSet" minHeight="40" styleClass="dataExplorer">	
+	</p:dialog>
+	
+	<p:dialog header="New Data Cube" widgetVar="dialogNewDataCube" minHeight="40" styleClass="dataExplorer">	
+	</p:dialog>
+	
+	<p:dialog header="New Report Parameter" widgetVar="dialogNewReportParameter" minHeight="40" styleClass="dataExplorer">	
+	</p:dialog>
+	
+	<p:dialog header="New Variable" widgetVar="dialogNewVariable" minHeight="40" styleClass="dataExplorer">	
+	</p:dialog>
+	
+	<p:dialog header="Upload Resource" widgetVar="dialogUploadResource" minHeight="40" styleClass="dataExplorer">
+		<p:growl id="uploadMessages" showDetail="true" />
+		<p:fileUpload value="#{fileUploadView.file}" mode="simple" skinSimple="true"/>
+		<p:commandButton value="Submit" ajax="false" actionListener="#{fileUploadView.upload}" disabled="true" />	
+	</p:dialog>
+
+	<p:dialog header="Data Explorer" widgetVar="dialogDataExplorer" minHeight="40" styleClass="dataExplorer">
+		<p:accordionPanel multiple="true">
+			<p:tab title="Data Sources">
+				<p:commandLink value="Create a Data Source" onclick="PF('dialogNewDataSource').show();" />
+			</p:tab>
+			
+			<p:tab title="Data Sets">
+				<p:commandLink value="Create a Data Set" onclick="PF('dialogNewDataSet').show();"/>
+			</p:tab>
+			
+			<p:tab title="Data Cubes">
+				<p:commandLink value="Create a Data Cube" onclick="PF('dialogNewDataCube').show();" />
+			</p:tab>
+			
+			<p:tab title="Report Parameters">
+				<p:commandLink value="Create a Report Parameter" onclick="PF('dialogNewReportParameter').show();" />
+			</p:tab>
+			
+			<p:tab title="Variables">
+				<p:commandLink value="Create a Variable" onclick="PF('dialogNewVariable').show();"/>
+			</p:tab>
+		</p:accordionPanel>
+	</p:dialog>
+
+	<p:dialog header="Palette" widgetVar="dialogPalette" minHeight="40" styleClass="paletteContainer">
+    	<p:panelGrid columns="2">
+    		<p:button  value="Label" 				icon="ui-icon-star" styleClass="paletteButton" />
+    		<p:button  value="Text" 				icon="ui-icon-star" styleClass="paletteButton"/>    		
+    		<p:button  value="Dynamic Text" 		icon="ui-icon-star" styleClass="paletteButton" />
+    		<p:button  value="Data" 				icon="ui-icon-star" styleClass="paletteButton" />
+    		<p:button  value="Image" 				icon="ui-icon-star" styleClass="paletteButton" />
+    		<p:button  value="Grid"		 			icon="ui-icon-star" styleClass="paletteButton" />
+    		<p:button  value="List" 				icon="ui-icon-star" styleClass="paletteButton" />
+    		<p:button  value="Table"		 		icon="ui-icon-star" styleClass="paletteButton" />
+    		<p:button  value="Chart" 				icon="ui-icon-star" styleClass="paletteButton" />
+    		<p:button  value="Cross Tab" 			icon="ui-icon-star" styleClass="paletteButton" />
+    		<p:button  value="Aggregation" 			icon="ui-icon-star" styleClass="paletteButton" />
+    		<p:button  value="Relative Time Period" icon="ui-icon-star" styleClass="paletteButton" />
+    	</p:panelGrid>
+	</p:dialog>
+
+	<p:dialog header="Resources" widgetVar="dialogResources" minHeight="40" styleClass="resourceDialog">
+		<p:accordionPanel multiple="false">
+			<p:tab title="Shared Resources">
+				<p:commandLink value="Upload Resources" onclick="PF('dialogUploadResource').show();"/>
+			</p:tab>
+		</p:accordionPanel>
+	</p:dialog>
+
+    <p:growl id="messages" showDetail="true" />
+ 
+    <p:toolbar>
+        <f:facet name="left">
+            <p:commandButton type="button" value="New" icon="ui-icon-document" />
+ 
+            <p:commandButton type="button" value="Open" icon="ui-icon-folder-open" />
+
+            <span class="ui-separator">
+                <span class="ui-icon ui-icon-grip-dotted-vertical" />
+            </span>
             
-            <li class="dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Edit<span class="caret"></span></a>
-              <ul class="dropdown-menu" role="menu">
-                <li><a href="#">New Report Design</a></li>
-                <li><a href="#">Open Report Design</a></li>
-                <li class="divider"></li>
-                <li><a href="#">Save</a></li>
-                <li><a href="#">Save As...</a></li>
-                <li class="divider"></li>
-                <li><a href="#">Exit</a></li>
-              </ul>
-            </li>
-          </ul>
-          <ul class="nav navbar-nav navbar-right">
-            <li><a href="../navbar/">JavaScript API</a></li>
-            <li><a href="../navbar-static-top/">REST API</a></li>
-          </ul>
-        </div><!--/.nav-collapse -->
-      </div>
-    </nav>
-	    </ui:composition>
-    </body>
+            <p:commandButton type="button" value="Data Explorer" onclick="PF('dialogDataExplorer').show();" icon="ui-icon-folder-open" />
+            <p:commandButton type="button" value="Palette" 		 onclick="PF('dialogPalette').show();" icon="ui-icon-folder-open" />
+            <p:commandButton type="button" value="Resources"	 onclick="PF('dialogResources').show();" icon="ui-icon-folder-open" />
+ 
+            <span class="ui-separator">
+                <span class="ui-icon ui-icon-grip-dotted-vertical" />
+            </span>
+ 
+            <p:commandButton type="button" title="Save" icon="ui-icon-disk" />
+            <p:commandButton type="button" title="Delete" icon="ui-icon-trash" />
+            <p:commandButton type="button" title="Print" icon="ui-icon-print" />
+        </f:facet>
+ 
+        <f:facet name="right">
+            <p:menuButton value="Options">
+                <p:menuitem value="Save" actionListener="#{toolbarView.save}" update="messages" icon="ui-icon-disk" />
+                <p:menuitem value="Update" actionListener="#{toolbarView.update}" update="messages" icon="ui-icon-arrowrefresh-1-w" />
+                <p:menuitem value="Delete" actionListener="#{toolbarView.delete}" ajax="false" icon="ui-icon-close" />
+                <p:menuitem value="Homepage" url="http://www.primefaces.org" icon="ui-icon-extlink" />
+            </p:menuButton>
+        </f:facet>
+ 
+    </p:toolbar>
+</h:form>
+    </ui:composition>
+</body>
+
 </html>

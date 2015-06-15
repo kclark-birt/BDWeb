@@ -25,6 +25,45 @@
       <artifactId>tomcat-annotations-api</artifactId>
       <version>7.0.47</version>
     </dependency>
+    
+<dependency>
+	<groupId>org.primefaces.extensions</groupId>
+	<artifactId>primefaces-extensions</artifactId>
+	<version>3.0.0</version>
+</dependency>
+
+<dependency>
+    <groupId>org.primefaces.extensions</groupId>
+    <artifactId>resources-ckeditor</artifactId>
+    <version>3.2.0</version>
+</dependency>
+
+<dependency>
+    <groupId>org.primefaces.extensions</groupId>
+    <artifactId>resources-codemirror</artifactId>
+    <version>3.2.0</version>
+</dependency>
+
+<dependency>
+	<groupId>org.apache.commons</groupId>
+	<artifactId>commons-lang3</artifactId>
+	<version>3.0</version>
+</dependency>
+
+<dependency>
+	<groupId>javax.servlet</groupId>
+	<artifactId>jstl</artifactId>
+	<version>1.2</version>
+</dependency>
+
+
+<dependency>
+	<groupId>net.bootsfaces</groupId>
+	<artifactId>bootsfaces</artifactId>
+	<version>0.6.0</version>
+</dependency>
+
+    
 <dependency>
 	<groupId>org.apache.tomcat.maven</groupId>
 	<artifactId>tomcat7-maven-plugin</artifactId>
