@@ -34,6 +34,8 @@ public class BirtEngine {
 			// Design API Configuration
 			config  = new DesignConfig();
 			
+			// Set BIRT's Home
+			
 			// Start the BIRT Engine
 			Platform.startup(config);
 			

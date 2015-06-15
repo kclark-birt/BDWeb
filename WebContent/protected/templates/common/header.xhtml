@@ -74,6 +74,17 @@
     	</p:panelGrid>
 	</p:dialog>
 
+	<p:dialog header="About" widgetVar="dialogAbout" minHeight="40" styleClass="about">
+		<p:panelGrid columns="2">
+			<h:outputText value="Author" />
+			<h:outputText value="Kristopher Clark" />
+			<h:outputText value="Build" />
+			<h:outputText value="${propertiesBean.buildNumber}" />
+			<h:outputText value="Source" />
+			<h:outputLink value="https://github.com/kclark-birt/BDWeb">Github</h:outputLink>
+		</p:panelGrid>
+	</p:dialog>
+
 	<p:dialog header="Resources" widgetVar="dialogResources" minHeight="40" styleClass="resourceDialog">
 		<p:accordionPanel multiple="false">
 			<p:tab title="Shared Resources">
@@ -115,7 +126,15 @@
                 <p:menuitem value="Homepage" url="http://www.primefaces.org" icon="ui-icon-extlink" />
             </p:menuButton>
         </f:facet>
- 
+
+        <f:facet name="right">
+            <p:menuButton value="Help">
+                <p:menuitem value="BIRT Developer Center"  	url="http://developer.actuate.com/" />
+                <p:menuitem value="JavaScript API" 			url="http://developer.actuate.com/be/documentation/Manualsihub2/using-jsapi.pdf" />
+                <p:menuitem value="REST API" 				url="http://restapitest.actuate.com:5000/ihub/v1/ihubrestdocs/" />
+                <p:menuitem value="About"	 				url="#" onclick="PF('dialogAbout').show();" />
+            </p:menuButton>
+        </f:facet> 
     </p:toolbar>
 </h:form>
     </ui:composition>
