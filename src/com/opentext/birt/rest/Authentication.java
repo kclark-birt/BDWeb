@@ -13,7 +13,7 @@ import com.opentext.ihub.IHubProperties;
 
 public class Authentication {
 	private IHubProperties iProperties = new IHubProperties();
-	private HashMap credentials;
+	private HashMap<String, String> credentials;
 	
 	public Authentication() {
 		
@@ -69,7 +69,7 @@ public class Authentication {
 		return false;
 	}
 	
-	public void setCredentials(HashMap credentials) {
+	public void setCredentials(HashMap<String, String> credentials) {
 		this.credentials = credentials;
 	}
 }

@@ -1,11 +1,11 @@
 package com.opentext.birt.engine;
 
-import java.io.BufferedReader;
-import java.io.ByteArrayInputStream;
 import java.io.File;
-import java.io.FileReader;
-import java.io.InputStream;
+import java.io.Serializable;
 import java.util.Scanner;
+
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.SessionScoped;
 
 import org.eclipse.birt.core.framework.Platform;
 import org.eclipse.birt.report.model.api.DesignConfig;
@@ -18,7 +18,11 @@ import org.eclipse.birt.report.model.api.SessionHandle;
 
 import com.ibm.icu.util.ULocale;
 
-public class BirtEngine {
+@ManagedBean
+@SessionScoped
+public class BirtEngine implements Serializable {
+	private static final long serialVersionUID = 1L;
+	
 	private DesignConfig  		 config;
 	private IDesignEngine 		 engine;
 	private IDesignEngineFactory factory;
@@ -26,7 +30,6 @@ public class BirtEngine {
 	private SessionHandle 		 session;
 	private ElementFactory 		 efactory;
 	private DesignElementHandle  element;
-	private InputStream          is;
 	private String				 xmlSource;
 	
 	public BirtEngine() {
@@ -76,6 +79,7 @@ public class BirtEngine {
 		}
 	}
 	
+	@SuppressWarnings("resource")
 	public void open(String rptdesign) {
 		try {
 			String content = new Scanner(new File(rptdesign)).useDelimiter("\\Z").next();

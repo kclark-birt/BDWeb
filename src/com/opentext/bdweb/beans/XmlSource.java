@@ -1,13 +1,9 @@
 package com.opentext.bdweb.beans;
 
 import java.io.Serializable;
-import java.util.HashMap;
-
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
-
 import com.opentext.birt.engine.BirtEngine;
-import com.opentext.birt.rest.Authentication;
 
 @ManagedBean
 @SessionScoped
