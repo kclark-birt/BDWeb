@@ -86,7 +86,7 @@ public class BirtEngine implements Serializable {
 			XmlSource  xmlSource  = (XmlSource)  facesContext.getApplication().getVariableResolver().resolveVariable(facesContext, "xmlSource");
 			NewDataSourceBean   dataSourceBean   = (NewDataSourceBean)  facesContext.getApplication().getVariableResolver().resolveVariable(facesContext, "newDataSourceBean");
 			// CHECK STRING
-	        OdaDataSourceHandle dataSourceHandle = efactory.newOdaDataSource(dataSourceBean.getDriverName(), "org.eclipse.birt.report.data.oda.jdbc");
+	        OdaDataSourceHandle dataSourceHandle = efactory.newOdaDataSource(dataSourceBean.getDriverName(), dataSourceBean.getDriverClass());
 
 	        dataSourceHandle.setProperty("odaDriverClass", dataSourceBean.getDriverClass());
 	        dataSourceHandle.setProperty("odaURL", 			dataSourceBean.getUrl());
