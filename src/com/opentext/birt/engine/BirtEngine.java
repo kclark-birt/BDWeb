@@ -13,6 +13,8 @@ import org.eclipse.birt.report.model.api.DesignElementHandle;
 import org.eclipse.birt.report.model.api.ElementFactory;
 import org.eclipse.birt.report.model.api.IDesignEngine;
 import org.eclipse.birt.report.model.api.IDesignEngineFactory;
+import org.eclipse.birt.report.model.api.OdaDataSetHandle;
+import org.eclipse.birt.report.model.api.OdaDataSourceHandle;
 import org.eclipse.birt.report.model.api.ReportDesignHandle;
 import org.eclipse.birt.report.model.api.SessionHandle;
 
@@ -64,11 +66,39 @@ public class BirtEngine implements Serializable {
 	}
 	
 	public void save() {
-		
+		try {
+			design.save();
+		}catch(Exception ex) {
+			ex.printStackTrace();
+		}
 	}
 	
 	public String getSource() {
 		return xmlSource;
+	}
+	
+	public void createDataSource() {
+		try {
+	        OdaDataSourceHandle dataSourceHandle = efactory.newOdaDataSource("Classic Models Data Source", "org.eclipse.birt.report.data.oda.jdbc");
+	        dataSourceHandle.setProperty("odaDriverClass", "org.eclipse.birt.report.data.oda.sampledb.Driver");
+	        dataSourceHandle.setProperty("odaURL", "jdbc:classicmodels:sampledb");
+	        dataSourceHandle.setProperty("odaUser", "ClassicModels");
+	        dataSourceHandle.setProperty("odaPassword", "");        
+	        design.getDataSources().add(dataSourceHandle);
+		}catch(Exception ex){
+			ex.printStackTrace();
+		}
+	}
+	
+	public void createDataSet() {
+		try {
+	        OdaDataSetHandle dataSetHandle = efactory.newOdaDataSet("Classic Models Data Set", "org.eclipse.birt.report.data.oda.jdbc.JdbcSelectDataSet");
+	        dataSetHandle.setDataSource("Classic Models Data Source");
+	        dataSetHandle.setQueryText("SELECT * FROM CLASSICMODELS.ORDERS");
+	        design.getDataSets().add(dataSetHandle);
+		}catch(Exception ex){
+			ex.printStackTrace();
+		}
 	}
 	
 	public void saveAs(String rptdesign) {
