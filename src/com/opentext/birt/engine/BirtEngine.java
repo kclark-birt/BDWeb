@@ -20,6 +20,7 @@ import org.eclipse.birt.report.model.api.ReportDesignHandle;
 import org.eclipse.birt.report.model.api.SessionHandle;
 
 import com.ibm.icu.util.ULocale;
+import com.opentext.bdweb.beans.NewDataSourceBean;
 import com.opentext.bdweb.beans.XmlSource;
 
 @ManagedBean
@@ -83,12 +84,16 @@ public class BirtEngine implements Serializable {
 		try {
 			FacesContext facesContext = FacesContext.getCurrentInstance();
 			XmlSource  xmlSource  = (XmlSource)  facesContext.getApplication().getVariableResolver().resolveVariable(facesContext, "xmlSource");
-	        OdaDataSourceHandle dataSourceHandle = efactory.newOdaDataSource("Classic Models Data Source", "org.eclipse.birt.report.data.oda.jdbc");
-	        dataSourceHandle.setProperty("odaDriverClass", "org.eclipse.birt.report.data.oda.sampledb.Driver");
-	        dataSourceHandle.setProperty("odaURL", "jdbc:classicmodels:sampledb");
-	        dataSourceHandle.setProperty("odaUser", "ClassicModels");
-	        dataSourceHandle.setProperty("odaPassword", "");        
+			NewDataSourceBean   dataSourceBean   = (NewDataSourceBean)  facesContext.getApplication().getVariableResolver().resolveVariable(facesContext, "newDataSourceBean");
+			// CHECK STRING
+	        OdaDataSourceHandle dataSourceHandle = efactory.newOdaDataSource(dataSourceBean.getDriverName(), "org.eclipse.birt.report.data.oda.jdbc");
+
+	        dataSourceHandle.setProperty("odaDriverClass", dataSourceBean.getDriverClass());
+	        dataSourceHandle.setProperty("odaURL", 			dataSourceBean.getUrl());
+	        dataSourceHandle.setProperty("odaUser", dataSourceBean.getUsername());
+	        dataSourceHandle.setProperty("odaPassword", dataSourceBean.getPassword());        
 	        design.getDataSources().add(dataSourceHandle);
+
 	        saveAs("Temp.rptdesign");
 	        open("Temp.rptdesign");
 	        xmlSource.setXmlSource(this.xmlSource);

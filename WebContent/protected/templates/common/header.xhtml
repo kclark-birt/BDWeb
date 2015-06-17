@@ -13,9 +13,47 @@
 <h:form>     
 
 	<p:dialog header="New Data Source" widgetVar="dialogNewDataSource" minHeight="40" styleClass="dataExplorer">
-		<p:panelGrid columns="2">
-			<p:commandButton value="Save" ajax="false" action="#{birtEngine.createDataSource()}" />	
-		</p:panelGrid>
+		<p:wizard flowListener="#{newDataSourceBean.onFlowProcess}">
+			<p:tab id="selectODA" title="Choose an ODA">
+				<p:messages />
+				<p:inputText value="#{newDataSourceBean.driverName}" required="true"/> <br/>
+				<p:selectOneMenu id="ODA" value="#{newDataSourceBean.driverClass}" required="true">
+					<f:selectItem itemLabel="Select an ODA" itemValue=""/>
+					<f:selectItem itemLabel="Classic Modules Inc. Sample Database" itemValue="org.eclipse.birt.report.data.oda.sampledb.Driver"/>
+					<f:selectItem itemLabel="Excel Data Source" itemValue="org.eclipse.birt.report.data.oda.excel"/>
+					<f:selectItem itemLabel="Flat File Data Source" itemValue="org.eclipse.datatools.connectivity.oda.flatfile"/>
+					<f:selectItem itemLabel="Hive Data Source" itemValue="org.apache.hive.jdbc.HiveDriver"/>
+					<f:selectItem itemLabel="JDBC Data Source" itemValue="JDBC"/>
+					<f:selectItem itemLabel="MongoDB Data Source" itemValue="MONGO"/>
+					<f:selectItem itemLabel="POJO Data Source" itemValue="POJO"/>
+					<f:selectItem itemLabel="Scripted Data Source" itemValue="SCRIPTED"/>
+					<f:selectItem itemLabel="Web Services Data Source" itemValue="org.eclipse.datatools.enablement.oda.ws"/>
+					<f:selectItem itemLabel="XML Data Source" itemValue="org.eclipse.datatools.enablement.oda.xml"/>
+				</p:selectOneMenu>
+			</p:tab>
+			
+			<p:tab id="connectionProperties" title="Enter connection properties">
+				<p:panelGrid columns="2">
+					<h:outputText value="Username"/>
+					<p:inputText value="#{newDataSourceBean.username}" />
+					<h:outputText value="Password"/>
+					<p:password value="#{newDataSourceBean.password}"/>
+					<h:outputText value="Database URL" />
+					<p:inputText value="#{newDataSourceBean.url}" />
+				</p:panelGrid>
+			</p:tab>
+			
+			<p:tab id="reviewODA" title="Review Data Source">
+				<p:panelGrid columns="2">
+					<h:outputText value="Data Source Name" />
+					<h:outputText value="#{newDataSourceBean.driverName}" />
+					<h:outputText value="Data Source Driver Class" />
+					<h:outputText value="#{newDataSourceBean.driverClass}" />
+					<p:commandButton value="Test Connection" />
+					<p:commandButton value="Save" ajax="false" action="#{birtEngine.createDataSource()}" process="@this"/>
+				</p:panelGrid>
+			</p:tab>
+		</p:wizard>	
 	</p:dialog>
 	
 	<p:dialog header="New Data Set" widgetVar="dialogNewDataSet" minHeight="40" styleClass="dataExplorer">
