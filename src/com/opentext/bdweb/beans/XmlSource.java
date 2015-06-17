@@ -1,8 +1,12 @@
 package com.opentext.bdweb.beans;
 
 import java.io.Serializable;
+
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.component.UIInput;
+import javax.faces.event.AjaxBehaviorEvent;
+
 import com.opentext.birt.engine.BirtEngine;
 
 @ManagedBean
@@ -12,6 +16,7 @@ public class XmlSource implements Serializable {
 	
 	private String xmlSource = null;
 	private BirtEngine birtEngine = new BirtEngine();
+	private UIInput newSource = new UIInput();
 	
 	public XmlSource() {
 		System.out.println("Constructing!!!!!!!");
@@ -22,6 +27,18 @@ public class XmlSource implements Serializable {
 		}
 		
 		System.out.println("END!!!!!!!!!!!!!!!!");
+	}
+	
+	public void setNewSource(String newSource) {
+		this.newSource.setValue(newSource);
+	}
+	
+	public UIInput getNewSource() {
+		return newSource;
+	}
+	
+	public void sourceChanged(AjaxBehaviorEvent event) {
+		System.out.println("CHANGED!");
 	}
 	
 	public String getXmlSource() {		

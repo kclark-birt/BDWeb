@@ -6,6 +6,7 @@ import java.util.Scanner;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.FacesContext;
 
 import org.eclipse.birt.core.framework.Platform;
 import org.eclipse.birt.report.model.api.DesignConfig;
@@ -19,6 +20,7 @@ import org.eclipse.birt.report.model.api.ReportDesignHandle;
 import org.eclipse.birt.report.model.api.SessionHandle;
 
 import com.ibm.icu.util.ULocale;
+import com.opentext.bdweb.beans.XmlSource;
 
 @ManagedBean
 @SessionScoped
@@ -79,23 +81,37 @@ public class BirtEngine implements Serializable {
 	
 	public void createDataSource() {
 		try {
+			FacesContext facesContext = FacesContext.getCurrentInstance();
+			XmlSource  xmlSource  = (XmlSource)  facesContext.getApplication().getVariableResolver().resolveVariable(facesContext, "xmlSource");
 	        OdaDataSourceHandle dataSourceHandle = efactory.newOdaDataSource("Classic Models Data Source", "org.eclipse.birt.report.data.oda.jdbc");
 	        dataSourceHandle.setProperty("odaDriverClass", "org.eclipse.birt.report.data.oda.sampledb.Driver");
 	        dataSourceHandle.setProperty("odaURL", "jdbc:classicmodels:sampledb");
 	        dataSourceHandle.setProperty("odaUser", "ClassicModels");
 	        dataSourceHandle.setProperty("odaPassword", "");        
 	        design.getDataSources().add(dataSourceHandle);
+	        saveAs("Temp.rptdesign");
+	        open("Temp.rptdesign");
+	        xmlSource.setXmlSource(this.xmlSource);
 		}catch(Exception ex){
 			ex.printStackTrace();
 		}
 	}
 	
+	public String getXmlSource() {
+		return xmlSource;
+	}
+	
 	public void createDataSet() {
 		try {
+			FacesContext facesContext = FacesContext.getCurrentInstance();
+			XmlSource  xmlSource  = (XmlSource)  facesContext.getApplication().getVariableResolver().resolveVariable(facesContext, "xmlSource");
 	        OdaDataSetHandle dataSetHandle = efactory.newOdaDataSet("Classic Models Data Set", "org.eclipse.birt.report.data.oda.jdbc.JdbcSelectDataSet");
 	        dataSetHandle.setDataSource("Classic Models Data Source");
 	        dataSetHandle.setQueryText("SELECT * FROM CLASSICMODELS.ORDERS");
 	        design.getDataSets().add(dataSetHandle);
+	        saveAs("Temp.rptdesign");
+	        open("Temp.rptdesign");
+	        xmlSource.setXmlSource(this.xmlSource);
 		}catch(Exception ex){
 			ex.printStackTrace();
 		}

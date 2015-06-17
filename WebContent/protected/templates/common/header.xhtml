@@ -12,10 +12,14 @@
     <ui:composition>
 <h:form>     
 
-	<p:dialog header="New Data Source" widgetVar="dialogNewDataSource" minHeight="40" styleClass="dataExplorer">	
+	<p:dialog header="New Data Source" widgetVar="dialogNewDataSource" minHeight="40" styleClass="dataExplorer">
+		<p:panelGrid columns="2">
+			<p:commandButton value="Save" ajax="false" action="#{birtEngine.createDataSource()}" />	
+		</p:panelGrid>
 	</p:dialog>
 	
-	<p:dialog header="New Data Set" widgetVar="dialogNewDataSet" minHeight="40" styleClass="dataExplorer">	
+	<p:dialog header="New Data Set" widgetVar="dialogNewDataSet" minHeight="40" styleClass="dataExplorer">
+		<p:commandButton value="Save" ajax="false" action="#{birtEngine.createDataSet()}" />	
 	</p:dialog>
 	
 	<p:dialog header="New Data Cube" widgetVar="dialogNewDataCube" minHeight="40" styleClass="dataExplorer">	
