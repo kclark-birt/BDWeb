@@ -126,6 +126,16 @@
 			
 			<p:tab title="Data Sets">
 				<p:commandLink value="Create a Data Set" onclick="PF('dialogNewDataSet').show();"/>
+					<p:panelGrid columns="2">
+						<f:facet name="header">
+							<h:outputText value="Available Data Sources" /><br/>
+							<p:selectOneMenu value="#{birtEngine.selectedDataSet}">
+								<f:selectItems  value="#{birtEngine.availableDataSets}"/>
+							</p:selectOneMenu>
+						</f:facet>
+						<p:commandButton value="Edit"/>
+						<p:commandButton value="Delete" ajax="false" action="${birtEngine.deleteDataSet()}"/>
+					</p:panelGrid>
 			</p:tab>
 			
 			<p:tab title="Data Cubes">

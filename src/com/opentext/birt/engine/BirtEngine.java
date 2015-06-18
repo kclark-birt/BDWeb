@@ -40,12 +40,15 @@ public class BirtEngine implements Serializable {
 	private DesignElementHandle   element;
 	private String				  xmlSource;
 	private Map<String,Object>    availableDataSources = new HashMap<String, Object>();
+	private Map<String,Object>    availableDataSets    = new HashMap<String, Object>();
 	private String                selectedDataSource;
+	private String				  selectedDataSet;
 	
 	public BirtEngine() {
 		try {
 			// Init selectedDataSource
 			availableDataSources.put("Please create a data source", "Please create a data source");
+			availableDataSets.put("Please create a data set", "Please create a data set");
 			
 			// Design API Configuration
 			config  = new DesignConfig();
@@ -121,13 +124,31 @@ public class BirtEngine implements Serializable {
 		
 		return availableDataSources;
 	}
+
+	public Map<String, Object> getAvailableDataSets() {
+		availableDataSets.clear();
+		
+		for(int i=0; i<design.getDataSets().getCount(); i++) {
+			availableDataSets.put(design.getDataSets().get(i).getName(), design.getDataSets().get(i).getName());
+		}
+		
+		return availableDataSets;
+	}
 	
 	public void setSelectedDataSource(String selectedDataSource) {
 		this.selectedDataSource = selectedDataSource;
 	}
 	
+	public void setSelectedDataSet(String selectedDataSet) {
+		this.selectedDataSet = selectedDataSet;
+	}
+	
 	public String getSelectedDataSource() {
 		return selectedDataSource;
+	}
+	
+	public String getSelectedDataSet() {
+		return selectedDataSet;
 	}
 	
 	public String getXmlSource() {
@@ -151,6 +172,24 @@ public class BirtEngine implements Serializable {
 			for(int i=0; i<design.getDataSources().getCount(); i++) {				
 				if(selectedDataSource.equals(design.getDataSources().get(i).getName())) {
 					design.getDataSources().get(i).drop();
+				}
+			}
+			saveAs("Temp.rptdesign");
+	        open("Temp.rptdesign");
+	        xmlSource.setXmlSource(this.xmlSource);
+		}catch(Exception ex){
+			ex.printStackTrace();
+		}
+	}
+
+	public void deleteDataSet() {
+		try {
+			FacesContext facesContext = FacesContext.getCurrentInstance();
+			XmlSource  xmlSource  = (XmlSource)  facesContext.getApplication().getVariableResolver().resolveVariable(facesContext, "xmlSource");
+			
+			for(int i=0; i<design.getDataSets().getCount(); i++) {				
+				if(selectedDataSet.equals(design.getDataSets().get(i).getName())) {
+					design.getDataSets().get(i).drop();
 				}
 			}
 			saveAs("Temp.rptdesign");
