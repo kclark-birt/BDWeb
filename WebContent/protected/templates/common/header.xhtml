@@ -6,7 +6,8 @@
 	  xmlns:h="http://java.sun.com/jsf/html" 
 	  xmlns:b="http://bootsfaces.net/ui" 
 	  xmlns:p="http://primefaces.org/ui"
-	  xmlns:f="http://java.sun.com/jsf/core">
+	  xmlns:f="http://java.sun.com/jsf/core"
+	  xmlns:pe="http://primefaces.org/ui/extensions">
 
 <body>
     <ui:composition>
@@ -50,20 +51,43 @@
 					<h:outputText value="Data Source Driver Class" />
 					<h:outputText value="#{newDataSourceBean.driverClass}" />
 					<p:commandButton value="Test Connection" />
-					<p:commandButton value="Save" ajax="false" action="#{birtEngine.createDataSource()}" process="@this"/>
+					<p:commandButton value="Save" 
+									 ajax="false" 
+									 action="#{birtEngine.createDataSource()}"  
+									 process="@this"/>
 				</p:panelGrid>
 			</p:tab>
 		</p:wizard>	
 	</p:dialog>
 	
 	<p:dialog header="New Data Set" widgetVar="dialogNewDataSet" minHeight="40" styleClass="dataExplorer">
-		<!-- <p:commandButton value="Save" ajax="false" action="#{birtEngine.createDataSet()}" /> -->
-		<p:panelGrid columns="2">
-			<h:outputText value="Select Data Source" />
-			<p:selectOneMenu value="#{birtEngine.selectedDataSource}">
-				<f:selectItems  value="#{birtEngine.availableDataSources}"/>
-			</p:selectOneMenu>
-		</p:panelGrid>	
+		<p:wizard>
+			<p:tab id="newDataSet1" title="Select a Data Source">
+				<p:panelGrid columns="2">
+					<h:outputText value="Select Data Source" />
+					<p:selectOneMenu value="#{birtEngine.selectedDataSource}">
+						<f:selectItems  value="#{birtEngine.availableDataSources}"/>
+					</p:selectOneMenu>
+				</p:panelGrid>	
+			</p:tab>
+			
+			<p:tab id="newDataSet2" title="Name your Data Set">
+				<p:panelGrid columns="2">
+					<h:outputText value="Data Set Name" />
+					<p:inputText value="#{newDataSetBean.dataSetName}"/>
+				</p:panelGrid>				
+			</p:tab>
+			
+			<p:tab id="newDataSet3" title="Write or paste your query">
+				<p:panelGrid columns="1">
+					<pe:codeMirror id="xmlArea" mode="xml" theme="eclipse" lineNumbers="true" value="#{newDataSetBean.query}" />
+					<p:commandButton value="Save" 
+									 ajax="false" 
+									 action="#{birtEngine.createDataSet()}"  
+									 process="@this"/>
+				</p:panelGrid>	
+			</p:tab>
+		</p:wizard>
 	</p:dialog>
 	
 	<p:dialog header="New Data Cube" widgetVar="dialogNewDataCube" minHeight="40" styleClass="dataExplorer">	

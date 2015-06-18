@@ -22,6 +22,7 @@ import org.eclipse.birt.report.model.api.ReportDesignHandle;
 import org.eclipse.birt.report.model.api.SessionHandle;
 
 import com.ibm.icu.util.ULocale;
+import com.opentext.bdweb.beans.NewDataSetBean;
 import com.opentext.bdweb.beans.NewDataSourceBean;
 import com.opentext.bdweb.beans.XmlSource;
 
@@ -163,10 +164,12 @@ public class BirtEngine implements Serializable {
 	public void createDataSet() {
 		try {
 			FacesContext facesContext = FacesContext.getCurrentInstance();
-			XmlSource  xmlSource  = (XmlSource)  facesContext.getApplication().getVariableResolver().resolveVariable(facesContext, "xmlSource");
-	        OdaDataSetHandle dataSetHandle = efactory.newOdaDataSet("Classic Models Data Set", "org.eclipse.birt.report.data.oda.jdbc.JdbcSelectDataSet");
-	        dataSetHandle.setDataSource("Classic Models Data Source");
-	        dataSetHandle.setQueryText("SELECT * FROM CLASSICMODELS.ORDERS");
+			XmlSource       xmlSource  = (XmlSource)       facesContext.getApplication().getVariableResolver().resolveVariable(facesContext, "xmlSource");
+			NewDataSetBean  dataSet    = (NewDataSetBean)  facesContext.getApplication().getVariableResolver().resolveVariable(facesContext, "newDataSetBean");
+			
+	        OdaDataSetHandle dataSetHandle = efactory.newOdaDataSet(dataSet.getDataSetName(), "org.eclipse.birt.report.data.oda.jdbc.JdbcSelectDataSet");
+	        dataSetHandle.setDataSource(selectedDataSource);
+	        dataSetHandle.setQueryText(dataSet.getQuery());
 	        design.getDataSets().add(dataSetHandle);
 	        saveAs("Temp.rptdesign");
 	        open("Temp.rptdesign");

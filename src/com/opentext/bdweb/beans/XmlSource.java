@@ -37,8 +37,8 @@ public class XmlSource implements Serializable {
 		return newSource;
 	}
 	
-	public void sourceChanged(AjaxBehaviorEvent event) {
-		System.out.println("CHANGED!");
+	public void sourceChange(AjaxBehaviorEvent event) {
+		xmlSource = event.getComponent().getClientId();
 	}
 	
 	public String getXmlSource() {		
