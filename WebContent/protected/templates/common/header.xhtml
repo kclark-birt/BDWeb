@@ -57,7 +57,13 @@
 	</p:dialog>
 	
 	<p:dialog header="New Data Set" widgetVar="dialogNewDataSet" minHeight="40" styleClass="dataExplorer">
-		<p:commandButton value="Save" ajax="false" action="#{birtEngine.createDataSet()}" />	
+		<!-- <p:commandButton value="Save" ajax="false" action="#{birtEngine.createDataSet()}" /> -->
+		<p:panelGrid columns="2">
+			<h:outputText value="Select Data Source" />
+			<p:selectOneMenu value="#{birtEngine.selectedDataSource}">
+				<f:selectItems  value="#{birtEngine.availableDataSources}"/>
+			</p:selectOneMenu>
+		</p:panelGrid>	
 	</p:dialog>
 	
 	<p:dialog header="New Data Cube" widgetVar="dialogNewDataCube" minHeight="40" styleClass="dataExplorer">	
