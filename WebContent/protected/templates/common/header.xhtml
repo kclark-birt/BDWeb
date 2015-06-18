@@ -78,7 +78,20 @@
 	<p:dialog header="Data Explorer" widgetVar="dialogDataExplorer" minHeight="40" styleClass="dataExplorer">
 		<p:accordionPanel multiple="true">
 			<p:tab title="Data Sources">
-				<p:commandLink value="Create a Data Source" onclick="PF('dialogNewDataSource').show();" />
+				<p:panelGrid columns="1">
+					<p:commandLink value="Create a Data Source" onclick="PF('dialogNewDataSource').show();" /> <br/>
+					
+					<p:panelGrid columns="2">
+						<f:facet name="header">
+							<h:outputText value="Available Data Sources" /><br/>
+							<p:selectOneMenu value="#{birtEngine.selectedDataSource}">
+								<f:selectItems  value="#{birtEngine.availableDataSources}"/>
+							</p:selectOneMenu>
+						</f:facet>
+						<p:commandButton value="Edit"/>
+						<p:commandButton value="Delete" ajax="false" action="${birtEngine.deleteDataSource()}"/>
+					</p:panelGrid>
+				</p:panelGrid>
 			</p:tab>
 			
 			<p:tab title="Data Sets">

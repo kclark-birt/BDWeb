@@ -2,6 +2,8 @@ package com.opentext.birt.engine;
 
 import java.io.File;
 import java.io.Serializable;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Scanner;
 
 import javax.faces.bean.ManagedBean;
@@ -28,17 +30,22 @@ import com.opentext.bdweb.beans.XmlSource;
 public class BirtEngine implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
-	private DesignConfig  		 config;
-	private IDesignEngine 		 engine;
-	private IDesignEngineFactory factory;
-	private ReportDesignHandle   design;
-	private SessionHandle 		 session;
-	private ElementFactory 		 efactory;
-	private DesignElementHandle  element;
-	private String				 xmlSource;
+	private DesignConfig  		  config;
+	private IDesignEngine 		  engine;
+	private IDesignEngineFactory  factory;
+	private ReportDesignHandle    design;
+	private SessionHandle 		  session;
+	private ElementFactory 		  efactory;
+	private DesignElementHandle   element;
+	private String				  xmlSource;
+	private Map<String,Object>    availableDataSources = new HashMap<String, Object>();
+	private String                selectedDataSource;
 	
 	public BirtEngine() {
 		try {
+			// Init selectedDataSource
+			availableDataSources.put("Please create a data source", "Please create a data source");
+			
 			// Design API Configuration
 			config  = new DesignConfig();
 			
@@ -85,7 +92,6 @@ public class BirtEngine implements Serializable {
 			FacesContext facesContext = FacesContext.getCurrentInstance();
 			XmlSource  xmlSource  = (XmlSource)  facesContext.getApplication().getVariableResolver().resolveVariable(facesContext, "xmlSource");
 			NewDataSourceBean   dataSourceBean   = (NewDataSourceBean)  facesContext.getApplication().getVariableResolver().resolveVariable(facesContext, "newDataSourceBean");
-			// CHECK STRING
 	        OdaDataSourceHandle dataSourceHandle = efactory.newOdaDataSource(dataSourceBean.getDriverName(), dataSourceBean.getDriverClass());
 
 	        dataSourceHandle.setProperty("odaDriverClass", dataSourceBean.getDriverClass());
@@ -97,13 +103,61 @@ public class BirtEngine implements Serializable {
 	        saveAs("Temp.rptdesign");
 	        open("Temp.rptdesign");
 	        xmlSource.setXmlSource(this.xmlSource);
+	        
+	        // Clear the bean
+	        dataSourceBean.clearAll();
 		}catch(Exception ex){
 			ex.printStackTrace();
 		}
 	}
 	
+	public Map<String, Object> getAvailableDataSources() {
+		availableDataSources.clear();
+		
+		for(int i=0; i<design.getDataSources().getCount(); i++) {
+			availableDataSources.put(design.getDataSources().get(i).getName(), design.getDataSources().get(i).getName());
+		}
+		
+		return availableDataSources;
+	}
+	
+	public void setSelectedDataSource(String selectedDataSource) {
+		this.selectedDataSource = selectedDataSource;
+	}
+	
+	public String getSelectedDataSource() {
+		return selectedDataSource;
+	}
+	
 	public String getXmlSource() {
 		return xmlSource;
+	}
+	
+	public void strDiff(String hear, String dear){
+	    String[] hr = dear.split("\n");
+	    for (String h : hr) {
+	        if (!hear.contains(h)) {
+	            System.err.println(h);
+	        }
+	    }
+	}
+	
+	public void deleteDataSource() {
+		try {
+			FacesContext facesContext = FacesContext.getCurrentInstance();
+			XmlSource  xmlSource  = (XmlSource)  facesContext.getApplication().getVariableResolver().resolveVariable(facesContext, "xmlSource");
+			
+			for(int i=0; i<design.getDataSources().getCount(); i++) {				
+				if(selectedDataSource.equals(design.getDataSources().get(i).getName())) {
+					design.getDataSources().get(i).drop();
+				}
+			}
+			saveAs("Temp.rptdesign");
+	        open("Temp.rptdesign");
+	        xmlSource.setXmlSource(this.xmlSource);
+		}catch(Exception ex){
+			ex.printStackTrace();
+		}
 	}
 	
 	public void createDataSet() {
