@@ -1,4 +1,4 @@
-Copyright (c) Kristopher Clark
+Copyright (c) Kristopher Clark with OpenText, Corp.
 
 Eclipse Public License - v 1.0
 
