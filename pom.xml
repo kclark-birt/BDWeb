@@ -58,22 +58,36 @@
 
 
 <dependency>
-	<groupId>net.bootsfaces</groupId>
-	<artifactId>bootsfaces</artifactId>
-	<version>0.6.0</version>
+    <groupId>net.bootsfaces</groupId>
+    <artifactId>bootsfaces</artifactId>
+    <version>0.7.0</version>
+    <scope>compile</scope>
 </dependency>
 
+<dependency>
+	<groupId>log4j</groupId>
+	<artifactId>log4j</artifactId>
+	<version>1.2.17</version>
+</dependency>
     
 <dependency>
-	<groupId>org.apache.tomcat.maven</groupId>
-	<artifactId>tomcat7-maven-plugin</artifactId>
-	<version>2.2</version>
+    <groupId>org.apache.tomcat.maven</groupId>
+    <artifactId>tomcat7-maven-plugin</artifactId>
+    <version>2.0-beta-1</version>
+    <type>maven-plugin</type>
+    <scope>provided</scope>
 </dependency>
-		<dependency>
-			<groupId>org.primefaces</groupId>
-			<artifactId>primefaces</artifactId>
-			<version>3.3</version>
-		</dependency>
+	<dependency>
+		<groupId>org.primefaces</groupId>
+		<artifactId>primefaces</artifactId>
+		<version>3.3</version>
+	</dependency>
+	<dependency>
+	    <groupId>net.bootsfaces</groupId>
+    	<artifactId>bootsfaces</artifactId>
+	    <version>0.6.6</version>
+    	<scope>compile</scope>
+	</dependency>
     <dependency>
       <groupId>org.eclipse.birt.runtime.3_7_1</groupId>
       <artifactId>Tidy</artifactId>

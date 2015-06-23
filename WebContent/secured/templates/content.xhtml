@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:ui="http://java.sun.com/jsf/facelets" 
+	  xmlns:h="http://java.sun.com/jsf/html" 
+	  xmlns:b="http://bootsfaces.net/ui" 
+	  xmlns:p="http://primefaces.org/ui"
+	  xmlns:f="http://java.sun.com/jsf/core"
+	  xmlns:pe="http://primefaces.org/ui/extensions">
+    <body>
+	    <ui:composition>	    	
+		    <p:growl id="msgs" showDetail="true" />
+    		<p:tabView>
+		        <p:tab title="Layout">
+	    			<h:form class="tabLayout">
+			    		<p:growl id="messages" showDetail="true"/>
+    					
+    					<p:panelGrid columns="1" border="0">
+    						<ui:repeat var="" value=""></ui:repeat>
+    					</p:panelGrid>
+
+	    			</h:form>
+        		</p:tab>
+        		<p:tab title="Script">
+	    			<h:form class="tabLayout">
+			    		<p:growl id="messages" showDetail="true"/>
+    					
+    					<pe:codeMirror id="codeMirror" mode="javascript" theme="eclipse" lineNumbers="true"/>    					
+	    			</h:form>
+		        </p:tab>
+        		<p:tab title="Master Page">
+	    			<h:form class="tabLayout">
+			    		<p:growl id="messages" showDetail="true"/>
+			    		
+	    			</h:form>
+		        </p:tab>
+        		<p:tab title="XML Source">
+	    			<h:form class="tabLayout">
+			    		<p:growl id="messages" showDetail="true"/>
+
+    					<pe:codeMirror id="xmlArea" mode="xml" theme="eclipse" lineNumbers="true" value="#{xmlSource.xmlSource}" />
+	    			</h:form>
+		        </p:tab>
+		    </p:tabView>
+	    </ui:composition>
+    </body>
+</html>

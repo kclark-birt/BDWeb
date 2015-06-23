@@ -7,7 +7,7 @@ import javax.faces.bean.SessionScoped;
 import javax.faces.component.UIInput;
 import javax.faces.event.AjaxBehaviorEvent;
 
-import com.opentext.birt.engine.BirtEngine;
+import com.opentext.birt.BirtEngine;
 
 @ManagedBean
 @SessionScoped

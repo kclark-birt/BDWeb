@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:ui="http://java.sun.com/jsf/facelets" 
+	  xmlns:h="http://java.sun.com/jsf/html" 
+	  xmlns:b="http://bootsfaces.net/ui" 
+	  xmlns:p="http://primefaces.org/ui"
+	  xmlns:f="http://java.sun.com/jsf/core"
+	  xmlns:pe="http://primefaces.org/ui/extensions">
+
+<body>
+    <ui:composition>
+
+	<h:form>
+	<p:dialog header="New Data Source" widgetVar="dialogNewDataSource" minHeight="40" styleClass="dataExplorer">
+		<p:wizard flowListener="#{newDataSourceBean.onFlowProcess}">
+			<p:tab id="selectODA" title="Choose an ODA">
+				<p:messages />
+				<p:inputText value="#{newDataSourceBean.driverName}" required="true"/> <br/>
+				<p:selectOneMenu id="ODA" value="#{newDataSourceBean.driverClass}" required="true">
+					<f:selectItem itemLabel="Select an ODA" 					   itemValue=""/>
+					<f:selectItem itemLabel="Classic Modules Inc. Sample Database" itemValue="org.eclipse.birt.report.data.oda.jdbc"/>
+					<f:selectItem itemLabel="Excel Data Source" 				   itemValue="org.eclipse.birt.report.data.oda.excel"/>
+					<f:selectItem itemLabel="Flat File Data Source" 			   itemValue="org.eclipse.datatools.connectivity.oda.flatfile"/>
+					<f:selectItem itemLabel="Hive Data Source" 					   itemValue="org.apache.hive.jdbc.HiveDriver"/>
+					<f:selectItem itemLabel="JDBC Data Source" 					   itemValue="JDBC"/>
+					<f:selectItem itemLabel="MongoDB Data Source" 	   			   itemValue="MONGO"/>
+					<f:selectItem itemLabel="POJO Data Source" 		   			   itemValue="POJO"/>
+					<f:selectItem itemLabel="Scripted Data Source"	   			   itemValue="SCRIPTED"/>
+					<f:selectItem itemLabel="Web Services Data Source" 			   itemValue="org.eclipse.datatools.enablement.oda.ws"/>
+					<f:selectItem itemLabel="XML Data Source" 					   itemValue="org.eclipse.datatools.enablement.oda.xml"/>
+				</p:selectOneMenu>
+			</p:tab>
+			
+			<p:tab id="connectionProperties" title="Enter connection properties">
+				<p:panelGrid columns="2">
+					<h:outputText value="Username"/>
+					<p:inputText  value="#{newDataSourceBean.username}" />
+					<h:outputText value="Password"/>
+					<p:password   value="#{newDataSourceBean.password}"/>
+					<h:outputText value="Database URL" />
+					<p:inputText  value="#{newDataSourceBean.url}" />
+				</p:panelGrid>
+			</p:tab>
+			
+			<p:tab id="reviewODA" title="Review Data Source">
+				<p:panelGrid columns="2">
+					<h:outputText 	 value="Data Source Name" />
+					<h:outputText 	 value="#{newDataSourceBean.driverName}" />
+					<h:outputText 	 value="Data Source Driver Class" />
+					<h:outputText 	 value="#{newDataSourceBean.driverClass}" />
+					<p:commandButton value="Test Connection" />
+					<p:commandButton value="Save" 
+									 ajax="false" 
+									 action="#{birtEngine.createDataSource()}"  
+									 process="@this"/>
+				</p:panelGrid>
+			</p:tab>
+		</p:wizard>	
+	</p:dialog> 
+	</h:form>   
+	
+	<h:form>
+	<p:dialog header="New Data Set" widgetVar="dialogNewDataSet" minHeight="40" styleClass="dataExplorer">
+		<p:wizard>
+			<p:tab id="newDataSet1" title="Select a Data Source">
+				<p:panelGrid columns="2">
+					<h:outputText 		value="Select Data Source" />
+					<p:selectOneMenu 	value="#{birtEngine.selectedDataSource}">
+						<f:selectItems  value="#{birtEngine.availableDataSources}"/>
+					</p:selectOneMenu>
+				</p:panelGrid>	
+			</p:tab>
+			
+			<p:tab id="newDataSet2" title="Name your Data Set">
+				<p:panelGrid columns="2">
+					<h:outputText value="Data Set Name" />
+					<p:inputText  value="#{newDataSetBean.dataSetName}"/>
+				</p:panelGrid>				
+			</p:tab>
+			
+			<p:tab id="newDataSet3" title="Write or paste your query">
+				<p:panelGrid columns="1">
+					<pe:codeMirror id="xmlArea" mode="xml" theme="eclipse" lineNumbers="true" value="#{newDataSetBean.query}" />
+					<p:commandButton value="Save" 
+									 ajax="false" 
+									 action="#{birtEngine.createDataSet()}"  
+									 process="@this"/>
+				</p:panelGrid>	
+			</p:tab>
+		</p:wizard>
+	</p:dialog>
+	</h:form>
+
+    	<h:form id="contextHome">
+    		<p:contextMenu for="file" event="click contextmenu">
+    		    <p:menuitem value="New Report Design" icon="ui-icon-search" />
+		        <p:menuitem value="Save" icon="ui-icon-close" />
+		        <p:menuitem value="Save As" icon="ui-icon-close" />
+	    	</p:contextMenu>
+	    	
+	    	<p:contextMenu for="palette" event="click contextmenu">
+	    		<p:menuitem value="Text Item" />
+	    		<p:menuitem value="Dynamic Text" />
+	    		<p:menuitem value="Data" />
+	    		<p:menuitem value="Image" />
+	    		<p:menuitem value="Grid" />
+	    		<p:menuitem value="List" />
+	    		<p:menuitem value="Table" />
+	    		<p:menuitem value="Chart" />
+	    		<p:menuitem value="Cross Tab" />
+	    		<p:menuitem value="Aggregation" />
+	    		<p:menuitem value="Relative Time Period" />
+	    	</p:contextMenu>
+
+	    	<p:contextMenu for="data" event="click contextmenu">
+	    		<p:menuitem value="Create a Data Source" onclick="PF('dialogNewDataSource').show();" />
+	    		<p:menuitem value="Create a Data Set" onclick="PF('dialogNewDataSet').show();" />
+	    		<p:menuitem value="Create a Data Cube" />
+	    		<p:separator />
+	    		<p:menuitem value="View Data Sources" />
+	    		<p:menuitem value="View Data Sets" />
+	    		<p:menuitem value="View Data Cubes" />
+	    	</p:contextMenu>
+	    	
+	    	<p:contextMenu for="resources" event="click contextmenu">
+	    		<p:menuitem value="Upload a resource" />
+	    		<p:menuitem value="View resources" />
+	    	</p:contextMenu>
+	    	
+	    	<p:contextMenu for="user" event="click contextmenu">
+	    		<p:menuitem value="Logout" action="#{loginBean.doLogout()}" />
+	    	</p:contextMenu>
+	    	
+	    	<p:contextMenu for="help" event="click contextmenu">
+	    		<p:menuitem value="BIRT Developer Center" />
+	    		<p:separator />
+	    		<p:menuitem value="REST API" />
+	    		<p:menuitem value="JavaScript API" />
+	    		<p:separator />
+	    		<p:menuitem value="Other Documentation" />
+	    		<p:separator />
+	    		<p:menuitem value="About BDWeb" />
+	    	</p:contextMenu>
+    	</h:form>
+    	
+		<p:dock position="bottom">
+    		<p:menuitem value="File"                  id="file"      icon="/resources/1_0/images/dock/folder.png"  url="#"/>
+		    <p:menuitem value="Palette"               id="palette"   icon="/resources/1_0/images/dock/palette.png" url="#"/>
+		    <p:menuitem value="Data Explorer"         id="data"      icon="/resources/1_0/images/dock/data.png"    url="#"/>
+		    <p:menuitem value="Resource Explorer"     id="resources" icon="/resources/1_0/images/dock/resources.png"    url="#"/>
+		    <p:menuitem value="#{loginBean.username}" id="user"      icon="/resources/1_0/images/dock/user.png"    url="#"/>
+		    <p:menuitem value="Help"                  id="help"      icon="/resources/1_0/images/dock/help.png"    url="#"/>
+		</p:dock>
+    </ui:composition>
+</body>
+
+</html>
